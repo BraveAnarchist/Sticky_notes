@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sticky Notes</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tilt+Neon&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: Tilt Neon;
+        }
+
+        .flex {
+            display: flex;
+            height: 100vh;
+        }
+
+        .input {
+            background-color: rgb(209, 220, 231);
+            width: 50%;
+            padding-top: 30vh;
+            padding-left: 5.5vw;
+        }
+
+        .input button {
+            margin-top: 3vh;
+            background: linear-gradient(to right, #ed6ea1cf, #ec8c69b6, #f7186ac8, #fbb13ba3);
+            border-radius: 50px;
+            width: 8rem;
+            height: 3rem;
+            color: white;
+            font-size: 17px;
+            border: none;
+            transition: all 2s ease;
+        }
+        .input button:hover{
+            background: linear-gradient(to right, #ed6ea0, #ec8c69, #f7186a, #fbb03b);
+            cursor: pointer;
+        }
+
+        .output {
+            width: 50%;
+        }
+
+        .output p {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+
+        .output .heading {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .note {
+            min-width: 200px;
+            margin-left: 2px;
+            margin-right: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 5px;
+            min-height: 170px;
+        }
+        .output .tmp{
+            display: block;
+            text-align: center;
+            padding-top: 23vh;
+        }
+
+        .cross {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+        <div class="input">
+            <div class="fillup animate__heartBeat">
+                <textarea class="inp" id="" cols="68" rows="10" placeholder="// Write a note here"
+                    style="padding:13px; box-shadow: 4px 4px 10px 0px #803636;border:black 1px solid"></textarea>
+                <input type="color" class="col" id="" value="#00ffa1" style="transform: translate(20px,-100px);">
+            </div>
+            <div>
+                <button>Add note</button>
+            </div>
+        </div>
+        <div class="output">
+            <div class="heading">
+                <h1>Your Notes</h1>
+            </div>
+            <p class="notes tmp">
+                You have not added a note yet.
+            </p>
+        </div>
+    </div>
+    <script>
+        const input = document.querySelector(".inp");
+        const color = document.querySelector(".col");
+        const btn = document.querySelector("button");
+        const output = document.querySelector(".notes");
+        let flag=0;
+
+        btn.addEventListener("click", () => {
+            document.querySelector("p").classList.remove("tmp");
+            let note_val = input.value;
+            if(note_val.trim().length===0){
+                alert("Enter Some Text");
+                input.classList.add("animate__animated","animate__shakeX");
+                return;   
+            }
+            if(flag==0){
+            document.querySelector("p").innerText="";
+            flag++;
+            }
+            input.classList.remove("animate__animated","animate__shakeX");
+            input.value = "";
+            const note = document.createElement("div");
+            const span1 = document.createElement("span");
+            span1.innerHTML = "&times;";
+            span1.classList.add("cross");
+            note.innerHTML = note_val;
+            note.append(note_val);
+            note.append(span1);
+            note.classList.add("note");
+            note.style.backgroundColor = color.value;
+            output.append(note);
+
+            span1.addEventListener("click", (e) => {
+                e.target.parentElement.remove();
+            })
+
+        }
+        )
+    </script>
+</body>
+
+</html>
